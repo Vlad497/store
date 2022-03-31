@@ -166,7 +166,6 @@ const DevicePageEdit = observer(() => {
                             </Dropdown>
                         </Col>
                     </Row>
-                    {/*Type*/}
                     <Row>
                         <Col xs={1} className="d-flex align-items-center">
                             Типы:
@@ -196,7 +195,6 @@ const DevicePageEdit = observer(() => {
                             </Dropdown>
                         </Col>
                     </Row>
-                    {/*Name*/}
                     <Row>
                         <Col xs={1} className="d-flex align-items-center">
                             Название:
@@ -212,7 +210,6 @@ const DevicePageEdit = observer(() => {
                             {name.length === 0 && <b style={{ color: "red" }}>Введите название товара</b>}
                         </Col>
                     </Row>
-                    {/*Name*/}
                     <Row className="mt-2">
                         <Col xs={1} className="d-flex align-items-center">
                             Цена:
@@ -229,26 +226,22 @@ const DevicePageEdit = observer(() => {
                         </Col>
                     </Row>
 
-                    {/*Name*/}
                     <Row className="mt-4">
                         <Col xs={3} className="d-flex flex-column justify-content-center text-center">
                             Текущее изображение: <br />
-                            <Image style={{ margin: "0 auto", marginTop: 15 }} width={150} src={'http://localhost:5000/' + deviceCurr.img} />
+                            <Image style={{ margin: "0 auto", marginTop: 15 }} width={"100%"} src={'http://localhost:5000/' + deviceCurr.img} />
                         </Col>
                         {img && <Col xs={6} className="d-flex flex-column justify-content-center text-center">
                             Новое изображение: <br />
-                            <Image style={{ margin: "0 auto", marginTop: 15 }} width={150} src={img} />
+                            <Image style={{ margin: "0 auto", marginTop: 15 }} width={"100%"} src={img} />
                         </Col>}
-                        <Col xs={3} className="d-flex align-items-center">
+                        <Col xs={4} className="d-flex align-items-center">
                             <Form.Group controlId="formFile" className="mb-3">
-                                <Form.Group>
-                                    <Form.File id="exampleFormControlFile1" label="Upload file" onChange={imgHandler} />
-                                </Form.Group>
+                                <Form.Control type="file" onChange={imgHandler} />
                             </Form.Group>
                         </Col>
                     </Row>
 
-                    {/*Characteristics*/}
                     <Row className="d-flex flex-column m-3">
                         <h4>Характеристики</h4>
                         <Button

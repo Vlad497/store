@@ -49,7 +49,7 @@ const DevicePage = observer(() => {
         <Container className="mt-3">
             <Row>
                 <Col md={4}>
-                    <Image height={300} width={150} src={'http://localhost:5000/' + device.img} />
+                    <Image height={300} width={"100%"} src={'http://localhost:5000/' + device.img} />
                 </Col>
                 <Col md={4}>
                     <Row className="d-flex flex-column align-items-center">

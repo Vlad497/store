@@ -120,6 +120,7 @@ const Admin = () => {
 
                 <Dropdown.Menu>
                     {filter === "All" ? <Dropdown.Item disabled>Весь товар</Dropdown.Item> : <Dropdown.Item onClick={() => setFilter("All")}>Весь товар</Dropdown.Item>}
+                    {/* {filter === "Without Brand or Type" ? <Dropdown.Item disabled>Without Brand or Type</Dropdown.Item> : <Dropdown.Item onClick={() => setFilter("Without Brand or Type")}>Without Brand or Type</Dropdown.Item>} */}
                 </Dropdown.Menu>
             </Dropdown>
 
@@ -145,8 +146,8 @@ const Admin = () => {
                     return (
                         <ListGroup.Item className="mt-3" key={id}>
                             <Row>
-                                <Col xs={2}>
-                                    <Image height={200} width={150} src={"http://localhost:5000/" + img} />
+                                <Col xs={3}>
+                                    <Image width={"100%"} src={"http://localhost:5000/" + img} />
                                 </Col>
                                 <Col xs={8}>
                                     <Row>

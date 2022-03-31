@@ -47,7 +47,7 @@ const OneOrder = () => {
                 return (
                     <Row key={i} className="mb-5">
                         <Col xs={2}>
-                            <Image width={150} height={200} src={'http://localhost:5000/' + descr.img} />
+                            <Image width={"100%"} src={'http://localhost:5000/' + descr.img} />
                         </Col>
                         <Col xs={10}>
                             Бренд: {descr.brand.name}<br />

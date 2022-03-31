@@ -10,8 +10,8 @@ const OneItemInBasket = ({ device }) => {
         <Card key={device.id} style={{ width: "100%" }} className="mb-3">
             <Card.Body>
                 <Row>
-                    <Col xs={4}>
-                        <Image src={"http://localhost:5000/" + device.img} style={{ height: 200, width: 150 }} />
+                    <Col xs={2}>
+                        <Image src={"http://localhost:5000/" + device.img} style={{ width: "100%" }} />
                     </Col>
                     <Col xs={4}>
                         <Row>
