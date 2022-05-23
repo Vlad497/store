@@ -8,11 +8,15 @@ import { SHOP_ROUTE } from "../utils/consts";
 const Ordering = () => {
     const { basket, user } = useContext(Context);
     const [phone, setPhone] = useState(null);
+    const [name, setName] = useState(null);
+    const [address, setAddress] = useState(null);
     const navigate = useNavigate();
 
     const buy = () => {
         let order = {
             mobile: phone,
+            name: name,
+            address: address,
             basket: basket.Basket
         }
 
@@ -21,7 +25,7 @@ const Ordering = () => {
         }
 
         sendOrder(order).then(data => {
-            basket.setDeleteAllDeviceFromBasket();
+            basket.setDeleteAllArtworkFromBasket();
             navigate(SHOP_ROUTE);
         });
     }
@@ -29,9 +33,22 @@ const Ordering = () => {
         <>
             <Form>
                 <Form.Control
-                    placeholder="Введите свой номер телефона..."
+                    className='mb-1'
+                    placeholder="Введите свой номер телефона"
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
+                />
+                <Form.Control
+                    className='mb-1'
+                    placeholder="Введите ФИО"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
+                <Form.Control
+                    className='mb-1'
+                    placeholder="Введите адрес доставки"
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
                 />
             </Form>
             <Row className="mt-3">

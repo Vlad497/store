@@ -1,11 +1,11 @@
 import { $authHost, $host } from "./index";
 
-export const sendOrder = async ({ auth, mobile, basket }) => {
+export const sendOrder = async ({ auth, mobile, name, address, basket }) => {
     if (auth) {
-        const { data } = await $authHost({ method: 'POST', url: 'api/orders', data: { mobile, basket } })
+        const { data } = await $authHost({ method: 'POST', url: 'api/orders', data: { mobile, name, address, basket } })
         return data;
     } else {
-        const { data } = await $host({ method: 'POST', url: 'api/orders', data: { mobile, basket } });
+        const { data } = await $host({ method: 'POST', url: 'api/orders', data: { mobile, name, address, basket } });
         return data;
     }
 }
@@ -25,7 +25,7 @@ export const fetchDeleteOrder = async ({ id }) => {
     return data;
 }
 
-export const getOneOrderDevices = async (id) => {
+export const getOneOrderArtworks = async (id) => {
     const { data } = await $authHost.get('api/orders/' + id);
     return data;
 }

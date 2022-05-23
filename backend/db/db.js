@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 module.exports = new Sequelize(
-    'online_store',
+    'internet_portal',
     'postgres',
     'root',
     {

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { fetchChangeStatusOrder, fetchDeleteOrder } from "../http/ordersAPI";
 import { ORDERS_ROUTE } from "../utils/consts";
 
-const ItemOneOrderInAdmin = ({ id, complete, mobile, createdAt, updatedAt, userId, reRender }) => {
+const ItemOneOrderInAdmin = ({ id, complete, mobile, name, address, createdAt, updatedAt, userId, reRender }) => {
     const [modalDelete, setShowDelete] = useState(false);
     const [modalStatus, setShowStatus] = useState(false);
 
@@ -50,12 +50,22 @@ const ItemOneOrderInAdmin = ({ id, complete, mobile, createdAt, updatedAt, userI
                     <Col md={8}>
                         <Row>
                             <Col xs={12}>
-                                <NavLink to={ORDERS_ROUTE + `/${id}`}>id: {id}</NavLink>
+                                <NavLink to={ORDERS_ROUTE + `/${id}`}>Номер заказа: {id}</NavLink>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={12}>
                                 Номер телефона: <a href={`tel:${mobile}`}>{mobile}</a>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={12}>
+                                ФИО: {name}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={12}>
+                                Адрес: {address}
                             </Col>
                         </Row>
                         <Row>
@@ -83,19 +93,18 @@ const ItemOneOrderInAdmin = ({ id, complete, mobile, createdAt, updatedAt, userI
                         <Row style={{ height: "100%" }} className="d-flex align-items-center">
                             <Col xs={6} className="d-flex justify-content-center">
                                 {complete ?
-                                    <Button variant="success" onClick={handleShowStatus}>Поставить на выполнение</Button>
+                                    <Button variant="success" onClick={handleShowStatus}>Убрать из выполненных</Button>
                                     :
                                     <Button variant="warning" onClick={handleShowStatus}>Выполнить</Button>}
                             </Col>
                             <Col xs={6} className="d-flex justify-content-center">
-                                <Button variant="danger" onClick={handleShowDelete}>Удалить</Button>
+                                <Button variant="outline-dark" onClick={handleShowDelete}>Удалить</Button>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
             </ListGroup.Item>
 
-            {/*modal confirm change status*/}
             <Modal show={modalStatus} onHide={handleCloseStatus}>
                 <Modal.Header closeButton>
                     <Modal.Title>Пожалуйста подтвердите</Modal.Title>
@@ -106,6 +115,8 @@ const ItemOneOrderInAdmin = ({ id, complete, mobile, createdAt, updatedAt, userI
                     Данные:
                     <ul>
                         <li>Номер телефона: {mobile}</li>
+                        <li>ФИО: {name}</li>
+                        <li>Адрес: {address}</li>
                         <li>Заказ создан: {formatDate(createdAt)}</li>
                         {complete ? `Заказ выполнен: ${formatDate(updatedAt)}` : false}
                         <li>Статус: {complete ? 'Выполнен' : `В процессе`}</li>
@@ -122,7 +133,6 @@ const ItemOneOrderInAdmin = ({ id, complete, mobile, createdAt, updatedAt, userI
                 </Modal.Footer>
             </Modal>
 
-            {/*modal confirm delete order*/}
             <Modal show={modalDelete} onHide={handleCloseDelete}>
                 <Modal.Header closeButton>
                     <Modal.Title>Пожалуйста подтвердите</Modal.Title>
@@ -133,9 +143,11 @@ const ItemOneOrderInAdmin = ({ id, complete, mobile, createdAt, updatedAt, userI
                     Данные:
                     <ul>
                         <li>Номер телефона: {mobile}</li>
+                        <li>ФИО: {name}</li>
+                        <li>Адрес: {address}</li>
                         <li>Заказ создан: {formatDate(createdAt)}</li>
                         {complete ? `Заказ выполнен: ${formatDate(updatedAt)}` : false}
-                        <li>Status: {complete ? 'Выполнен' : `В процессе`}</li>
+                        <li>Статус: {complete ? 'Выполнен' : `В процессе`}</li>
                         <li>{userId ? 'Покупатель зарегистрирован' : `Покупатель незарегистрирован`}</li>
                     </ul>
                 </Modal.Body>

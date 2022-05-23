@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { getOneOrderDevices } from "../http/ordersAPI";
+import { getOneOrderArtworks } from "../http/ordersAPI";
 
 const OneOrder = () => {
     const { id } = useParams();
@@ -9,7 +9,7 @@ const OneOrder = () => {
     const [order, setOrder] = useState([]);
 
     useEffect(() => {
-        getOneOrderDevices(id).then(data => {
+        getOneOrderArtworks(id).then(data => {
             setOrder(data);
             setLoading(false);
         })
@@ -34,34 +34,43 @@ const OneOrder = () => {
     }
 
     return (
-        <Container className="d-flex flex-column">
-            Id заказа: {id} <br />
-            Статус: {order?.descr.complete ? "Выполнен" : "Not complete"} <br />
-            Покупатель: {order?.descr.userId ? order.descr.userId : "Зарегистрирован"} <br />
-            Создан: {formatDate(order?.descr.createdAt)} <br />
-            {/* {order?.descr.complete ? formatDate(order.descr.complete.updatedAt) : false} */}
-            Номер телефона:<a href={`tel:${order?.descr.mobile}`}> {order?.descr.mobile}</a>
-            <br />
+        <Container className="d-flex flex-column mt-5" style={{ color: "white", fontSize: '1.5vw' }}>
+            <Row>
+                <Col xs={5} className="mr-5">
+                    Номер заказа: {id} <br />
+                    Статус: {order?.descr.complete ? "Выполнен" : "Не выполнен"} <br />
+                    Покупатель: {order?.descr.userId ? order.descr.userId : "Зарегистрирован"} <br />
+                    Создан: {formatDate(order?.descr.createdAt)} <br />
+                    Номер телефона: <a href={`tel:${order?.descr.mobile}`}> {order?.descr.mobile}</a>
+                    <br />
+                    ФИО: {order?.descr.name}
+                    <br />
+                    Адрес: {order?.descr.address}
+                    <br />
+                </Col>
+                <Col>
+                    {order?.artworks.map(({ count, descr }, i) => {
+                        return (
+                            <Row key={i} className="mb-5">
+                                <Col xs={4}>
+                                    <Image width={"100%"} src={'http://localhost:5000/' + descr.img} />
+                                </Col>
+                                <Col xs={8} style={{ color: "white", fontSize: '1.5vw' }}>
+                                    Автор: {descr.author.name}<br />
+                                    Тип: {descr.type.name}<br />
+                                    Название: {descr.name}<br />
+                                    Цена: {descr.price} BYN<br />
+                                    Количество: {count}<br />
+                                    Общая стоимость: {count * descr.price} BYN
+                                </Col>
+                            </Row>
+                        )
+                    })}
+                </Col>
+            </Row>
 
-            {order?.devices.map(({ count, descr }, i) => {
-                return (
-                    <Row key={i} className="mb-5">
-                        <Col xs={2}>
-                            <Image width={"100%"} src={'http://localhost:5000/' + descr.img} />
-                        </Col>
-                        <Col xs={10}>
-                            Бренд: {descr.brand.name}<br />
-                            Тип: {descr.type.name}<br />
-                            Название: {descr.name}<br />
-                            Цена: {descr.price} Руб<br />
-                            Количество: {count}<br />
-                            Общая стоимость: {count * descr.price} Руб
-                        </Col>
-                    </Row>
-                )
-            })}
 
-        </Container>
+        </Container >
     );
 };
 

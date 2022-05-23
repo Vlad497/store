@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from "react-bootstrap";
-import { createType } from "../../http/artworkAPI";
+import { createAuthor } from "../../http/artworkAPI";
 
-const CreateType = ({ show, onHide }) => {
+const CreateAuthor = ({ show, onHide }) => {
     const [value, setValue] = useState('');
-    const addType = () => {
-        createType({ name: value }).then(() => {
+    const addAuthor = () => {
+        createAuthor({ name: value }).then(data => {
             setValue('')
             onHide();
         });
@@ -20,24 +20,24 @@ const CreateType = ({ show, onHide }) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Добавление типа
+                    Добавление автора
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Control
-                        placeholder="Введите название типа"
-                        onChange={e => setValue(e.target.value)}
+                        placeholder="Введите автора"
                         value={value}
+                        onChange={e => setValue(e.target.value)}
                     />
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-dark" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-dark" onClick={addType}>Добавить</Button>
+                <Button className='mr-3' variant="outline-dark" onClick={onHide}>Закрыть</Button>
+                <Button variant="outline-dark" onClick={() => addAuthor()}>Добавить</Button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default CreateType;
+export default CreateAuthor;

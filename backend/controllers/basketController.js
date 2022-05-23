@@ -1,42 +1,42 @@
-const { Basket, BasketDevice, Device, DeviceInfo } = require('./../models/models');
+const { Basket, BasketArtwork, Artwork, ArtworkInfo } = require('./../models/models');
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 
 class BasketController {
-    async addDevice(req, res) {
+    async addArtwork(req, res) {
         try {
             const { id } = req.body;
             const token = req.headers.authorization.split(' ')[1];
             const user = jwt.verify(token, "sdsgdsgdsfgdf");
             const basket = await Basket.findOne({ where: { userId: user.id } });
-            await BasketDevice.create({ basketId: basket.id, deviceId: id });
-            return res.json("Товар добавлен в корзину");
+            await BasketArtwork.create({ basketId: basket.id, artworkId: id });
+            return res.json("Произведение искусства добавлено в корзину");
         } catch (e) {
             console.error(e);
         }
     }
 
-    async getDevices(req, res) {
+    async getArtworks(req, res) {
         try {
             const token = req.headers.authorization.split(' ')[1];
             const user = jwt.verify(token, "sdsgdsgdsfgdf");
             const { id } = await Basket.findOne({ where: { userId: user.id } });
-            const basket = await BasketDevice.findAll({ where: { basketId: id } });
+            const basket = await BasketArtwork.findAll({ where: { basketId: id } });
 
             const basketArr = [];
             for (let i = 0; i < basket.length; i++) {
-                const basketDevice = await Device.findOne({
+                const basketArtwork = await Artwork.findOne({
                     where: {
-                        id: basket[i].deviceId,
+                        id: basket[i].artworkId,
 
                     },
                     include: {
-                        model: DeviceInfo, as: "info",
+                        model: ArtworkInfo, as: "info",
                         where: {
-                            deviceId: basket[i].deviceId,
+                            artworkId: basket[i].artworkId,
                             [Op.or]: [
                                 {
-                                    deviceId: {
+                                    artworkId: {
                                         [Op.not]: null
                                     }
                                 }
@@ -45,7 +45,7 @@ class BasketController {
                         required: false
                     }
                 });
-                basketArr.push(basketDevice);
+                basketArr.push(basketArtwork);
             }
 
             return res.json(basketArr);
@@ -54,18 +54,18 @@ class BasketController {
         }
     }
 
-    async deleteDevice(req, res) {
+    async deleteArtwork(req, res) {
         try {
             const { id } = req.params;
             const user = req.user;
 
             await Basket.findOne({ where: { userId: user.id } }).then(async userBasket => {
                 if (userBasket.userId === user.id) {
-                    await BasketDevice.destroy({ where: { basketId: userBasket.id, deviceId: id } })
+                    await BasketArtwork.destroy({ where: { basketId: userBasket.id, artworkId: id } })
                 }
-                return res.json(`У вас нет доступа для удаления устройства (${id}) из корзины, которая вам не принадлежит`);
+                return res.json(`У вас нет доступа для удаления произведения искусства (${id}) из корзины`);
             });
-            return res.json("Товар удален из вашей корзины");
+            return res.json("Произведение искусства удалено из корзины");
         } catch (e) {
             console.error(e);
         }

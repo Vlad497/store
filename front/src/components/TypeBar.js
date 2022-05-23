@@ -4,28 +4,30 @@ import { Context } from "../index";
 import { ListGroup } from "react-bootstrap";
 
 const TypeBar = observer(() => {
-    const { device } = useContext(Context);
+    const { artwork } = useContext(Context);
 
-    const getAllDevices = () => {
-        device.setSelectedType("all");
-        device.setSelectedBrand("all");
+    const getAllArtworks = () => {
+        artwork.setSelectedType("all");
+        artwork.setSelectedAuthor("all");
     }
 
     return (
         <ListGroup>
             <ListGroup.Item
-                style={{ cursor: "pointer" }}
-                active={"all" === device.selectedType}
-                onClick={getAllDevices}
+                style={{ cursor: "pointer", background: "transparent", color: "white" }}
+                active={"all" === artwork.selectedType}
+                onClick={getAllArtworks}
+                className="p-1 mb-5"
             >
-                Весь товар
+                Весь каталог
             </ListGroup.Item>
-            {device.types.map(type =>
+            {artwork.types.map(type =>
                 <ListGroup.Item
-                    style={{ cursor: "pointer" }}
-                    active={type.id === device.selectedType.id}
+                    style={{ cursor: "pointer", background: "transparent", color: "white" }}
+                    active={type.id === artwork.selectedType.id}
                     key={type.id}
-                    onClick={() => device.setSelectedType(type)}
+                    onClick={() => artwork.setSelectedType(type)}
+                    className="p-1"
                 >
                     {type.name}
                 </ListGroup.Item>

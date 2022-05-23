@@ -2,11 +2,11 @@ const Router = require('express');
 const router = new Router();
 const BasketController = require('./../controllers/basketController');
 const authMiddleware = require('./../middleware/authMiddleware');
-const checkDeleteDeviceFromBasket = require('./../middleware/checkDeleteDeviceFromBasket');
+const checkDeleteArtworkFromBasket = require('./../middleware/checkDeleteArtworkFromBasket');
 
 router
-    .post('/', authMiddleware, BasketController.addDevice)
-    .get('/', authMiddleware, BasketController.getDevices)
-    .delete('/:id', authMiddleware, checkDeleteDeviceFromBasket, BasketController.deleteDevice);
+    .post('/', authMiddleware, BasketController.addArtwork)
+    .get('/', authMiddleware, BasketController.getArtworks)
+    .delete('/:id', authMiddleware, checkDeleteArtworkFromBasket, BasketController.deleteArtwork);
 
 module.exports = router;

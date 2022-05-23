@@ -13,7 +13,7 @@ const BasketNavBar = observer(() => {
         <div className="d-flex align-items-center mr-3">
             <NavLink to={BASKET_ROUTE} className="d-flex align-items-center">
                 <Image src={shop_cart} style={{ width: "100%", maxWidth: 30 }} alt="basket" />
-                <div className="ml-2" style={{ textDecoration: "none", color: "white" }}>{basket.Price} Руб</div>
+                <div className="ml-2" style={{ textDecoration: "none", color: "white" }}>{basket.Price} BYN</div>
             </NavLink>
         </div>
     );

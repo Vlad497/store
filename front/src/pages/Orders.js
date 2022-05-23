@@ -71,9 +71,9 @@ const Orders = () => {
         <Container className="d-flex flex-column">
             <Row>
                 <Col xs={12} className="mt-3 d-flex justify-content-center align-items-center">
-                    <div className="mr-3">Фильтр:</div>
+                    <div className="mr-3" style={{ color: "white" }}>Фильтр:</div>
                     <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
                             {filter}
                         </Dropdown.Toggle>
 
@@ -86,12 +86,14 @@ const Orders = () => {
                 </Col>
             </Row>
             <ListGroup>
-                {orders.rows?.map(({ id, complete, mobile, createdAt, updatedAt, userId }) =>
+                {orders.rows?.map(({ id, complete, mobile, name, address, createdAt, updatedAt, userId }) =>
                     <ItemOneOrderInAdmin
                         key={id}
                         id={id}
                         complete={complete}
                         mobile={mobile}
+                        name={name}
+                        address={address}
                         createdAt={createdAt}
                         updatedAt={updatedAt}
                         userId={userId}

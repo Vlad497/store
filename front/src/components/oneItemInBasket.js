@@ -3,27 +3,27 @@ import { Button, Card, Col, Image, Row } from "react-bootstrap";
 import { Context } from "../index";
 import { NavLink } from "react-router-dom";
 
-const OneItemInBasket = ({ device }) => {
+const OneItemInBasket = ({ artwork }) => {
     const { basket, user } = useContext(Context);
 
     return (
-        <Card key={device.id} style={{ width: "100%" }} className="mb-3">
+        <Card key={artwork.id} style={{ width: "100%" }} className="mb-3">
             <Card.Body>
                 <Row>
                     <Col xs={2}>
-                        <Image src={"http://localhost:5000/" + device.img} style={{ width: "100%" }} />
+                        <Image src={"http://localhost:5000/" + artwork.img} style={{ width: "100%" }} />
                     </Col>
                     <Col xs={4}>
                         <Row>
                             <Col xs={12}>
-                                <b>Название:</b> <NavLink to={`/device/${device.id}`}>{device.name}</NavLink>
+                                <b>Название:</b> <NavLink to={`/artwork/${artwork.id}`}>{artwork.name}</NavLink>
                             </Col>
                         </Row>
                         <br /><br />
                         <Row>
                             <Col xs={12}>
                                 <b>Описание:</b><br /><br />
-                                {device.info && device.info.length !== 0 ? device.info.map((info, i) => {
+                                {artwork.info && artwork.info.length !== 0 ? artwork.info.map((info, i) => {
 
                                     if (i % 2 === 0) {
                                         return (
@@ -58,8 +58,8 @@ const OneItemInBasket = ({ device }) => {
                     <Col xs={4}>
                         <Row>
                             <Col xs={12} className="d-flex justify-content-center">
-                                {user.isAuth ? <Button variant="outline-dark" onClick={() => basket.setDeleteItemBasket(device, true)}>Удалить из корзины</Button>
-                                    : <Button variant="outline-dark" onClick={() => basket.setDeleteItemBasket(device)}>Удалить из корзины</Button>
+                                {user.isAuth ? <Button variant="outline-dark" onClick={() => basket.setDeleteItemBasket(artwork, true)}>Удалить из корзины</Button>
+                                    : <Button variant="outline-dark" onClick={() => basket.setDeleteItemBasket(artwork)}>Удалить из корзины</Button>
                                 }
                             </Col>
                         </Row>
@@ -70,14 +70,14 @@ const OneItemInBasket = ({ device }) => {
                         </Row>
                         <Row className="mt-2">
                             <Col xs={12} className="d-flex justify-content-center">
-                                <Button variant="outline-dark" onClick={() => basket.setCountDevice(device.id, "+")}>+</Button>
-                                <input className="ml-2 mr-2 pl-2 pr-2" style={{ width: "20%" }} type="number" onChange={e => basket.setCountDevice(Number(e.target.value))} value={device.count} />
-                                <Button variant="outline-dark" onClick={() => basket.setCountDevice(device.id, "-")}>-</Button>
+                                <Button variant="outline-dark" onClick={() => basket.setCountArtwork(artwork.id, "+")}>+</Button>
+                                <input className="ml-2 mr-2 pl-2 pr-2" style={{ width: "20%" }} type="number" onChange={e => basket.setCountArtwork(Number(e.target.value))} value={artwork.count} />
+                                <Button variant="outline-dark" onClick={() => basket.setCountArtwork(artwork.id, "-")}>-</Button>
                             </Col>
                         </Row>
                         <Row className="mt-5">
                             <Col xs={12} className="d-flex justify-content-center">
-                                Цена: {device.price * device.count} Руб
+                                Цена: {artwork.price * artwork.count} BYN
                             </Col>
                         </Row>
                     </Col>

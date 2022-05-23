@@ -15,9 +15,9 @@ const BasketCard = observer(() => {
 
     if (basket.Basket.length === 0) {
         return (
-            <div className="d-flex flex-column align-items-center mt-5">
-                <Image src={emptyBasket} />
-                <div className="text-center mt-5" style={{ fontSize: 28 }}><b>Пустая корзина</b></div>
+            <div className="d-flex flex-column align-items-center">
+                <div className="text-center mt-3 mb-3" style={{ fontSize: 28, color: "white" }}><b>Корзина пуста</b></div>
+                <Image src={emptyBasket} style={{ borderRadius: '25%' }} />
             </div>
         )
     }
@@ -30,7 +30,7 @@ const BasketCard = observer(() => {
             </NavLink>
             <Row className="mt-3">
                 <Col xs={12}>
-                    {basket.Basket.map(device => <OneItemInBasket key={device.id} device={device} />)}
+                    {basket.Basket.map(artwork => <OneItemInBasket key={artwork.id} artwork={artwork} />)}
                 </Col>
             </Row>
         </>

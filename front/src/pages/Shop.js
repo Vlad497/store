@@ -1,54 +1,59 @@
 import React, { useContext, useEffect } from 'react';
 import { Col, Container, Row } from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
-import BrandBar from "../components/BrandBar";
-import DeviceList from "../components/DeviceList";
+import AuthorBar from "../components/AuthorBar";
+import ArtworkList from "../components/ArtworkList";
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
-import { fetchBrands, fetchDevice, fetchTypes } from "../http/deviceAPI";
+import { fetchAuthors, fetchArtwork, fetchTypes } from "../http/artworkAPI";
 import Pages from "../components/Pages";
 
 const Shop = observer(() => {
-    const { device } = useContext(Context);
+    const { artwork } = useContext(Context);
 
     useEffect(() => {
-        fetchTypes().then(data => device.setTypes(data));
-        fetchBrands().then(data => device.setBrands(data));
-        fetchDevice(null, null, 1, 9).then(data => {
-            device.setDevices(data.rows);
-            device.setTotalCount(data.count);
+        fetchTypes().then(data => artwork.setTypes(data));
+        fetchAuthors().then(data => artwork.setAuthors(data));
+        fetchArtwork(null, null, 1, 6).then(data => {
+            artwork.setArtworks(data.rows);
+            artwork.setTotalCount(data.count);
         });
     }, []);
 
     useEffect(
         () => {
-            if (device.selectedType === "all") {
-                fetchDevice(null, device.selectedBrand.id, device.page, 9).then(data => {
-                    device.setDevices(data.rows);
-                    device.setTotalCount(data.count);
+            if (artwork.selectedType === "all") {
+                fetchArtwork(null, artwork.selectedAuthor.id, artwork.page, 6).then(data => {
+                    artwork.setArtworks(data.rows);
+                    artwork.setTotalCount(data.count);
                 });
             } else {
-                fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 9).then(data => {
-                    device.setDevices(data.rows);
-                    device.setTotalCount(data.count);
+                fetchArtwork(artwork.selectedType.id, artwork.selectedAuthor.id, artwork.page, 6).then(data => {
+                    artwork.setArtworks(data.rows);
+                    artwork.setTotalCount(data.count);
                 });
             }
-        }, [device.page, device.selectedType, device.selectedBrand],
+        }, [artwork.page, artwork.selectedType, artwork.selectedAuthor],
     );
 
     return (
-        <Container>
-            <Row className="mt-3">
+        <Container >
+            <Row className="d-flex justify-content-center mb-2">
+                <Pages />
+            </Row>
+            <Row >
                 <Col md={3}>
                     <TypeBar />
                 </Col>
-                <Col md={9}>
-                    <BrandBar />
-                    <DeviceList />
-                    <Pages />
+                <Col md={6}>
+                    <ArtworkList />
+                </Col>
+                <Col md={3}>
+                    <AuthorBar />
                 </Col>
             </Row>
-        </Container>
+
+        </Container >
     );
 });
 

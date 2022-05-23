@@ -32,7 +32,7 @@ const TrueAuth = () => {
                 variant={"outline-light"}
                 onClick={() => { navigate(ADMIN_ROUTE) }}
             >
-                Админ панель
+                Администрирование
             </Button>}
             <Button
                 variant={"outline-light"}

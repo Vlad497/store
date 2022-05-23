@@ -12,22 +12,22 @@ import {
     Row
 } from "react-bootstrap";
 
-import CreateDevice from "../components/modals/CreateDevice";
-import CreateBrand from "../components/modals/CreateBrand";
+import CreateArtwork from "../components/modals/CreateArtwork";
+import CreateAuthor from "../components/modals/CreateAuthor";
 import CreateType from "../components/modals/CreateType";
-import { getAllDevicesInAdminPage } from "../http/deviceAPI";
+import { getAllArtworksInAdminPage } from "../http/artworkAPI";
 import { NavLink } from "react-router-dom";
-import { DEVICE_EDIT_ROUTE } from "../utils/consts";
-import DeleteBrandOrType from "../components/modals/DeleteBrandOrType";
+import { ARTWORK_EDIT_ROUTE } from "../utils/consts";
+import DeleteAuthorOrType from "../components/modals/DeleteAuthorOrType";
 
 const Admin = () => {
-    const [brandVisible, setBrandVisible] = useState(false);
+    const [authorVisible, setAuthorVisible] = useState(false);
     const [typeVisible, setTypeVisible] = useState(false);
-    const [deviceVisible, setDeviceVisible] = useState(false);
-    const [deleteBrandOrType, setDeleteBrandOrType] = useState(false);
+    const [artworkVisible, setArtworkVisible] = useState(false);
+    const [deleteAuthorOrType, setDeleteAuthorOrType] = useState(false);
 
-    const [searchDevice, setSearchDevice] = useState('');
-    const [searchedDevice, setSearchedDevice] = useState([]);
+    const [searchArtwork, setSearchArtwork] = useState('');
+    const [searchedArtwork, setSearchedArtwork] = useState([]);
     const [filter, setFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(1);
@@ -49,24 +49,24 @@ const Admin = () => {
 
 
     useEffect(() => {
-        getAllDevicesInAdminPage(searchDevice, currentPage, filter).then(({ count, rows }) => {
-            setSearchedDevice(rows);
+        getAllArtworksInAdminPage(searchArtwork, currentPage, filter).then(({ count, rows }) => {
+            setSearchedArtwork(rows);
             setCount(count)
         })
     }, [currentPage])
 
     useEffect(() => {
-        getAllDevicesInAdminPage(searchDevice, 1, filter).then(({ count, rows }) => {
-            setSearchedDevice(rows);
+        getAllArtworksInAdminPage(searchArtwork, 1, filter).then(({ count, rows }) => {
+            setSearchedArtwork(rows);
             setCount(count);
             setCurrentPage(1);
         })
     }, [filter, successMsg])
 
 
-    const fetchDevice = () => {
-        getAllDevicesInAdminPage(searchDevice, currentPage, filter).then(({ count, rows }) => {
-            setSearchedDevice(rows);
+    const fetchArtwork = () => {
+        getAllArtworksInAdminPage(searchArtwork, currentPage, filter).then(({ count, rows }) => {
+            setSearchedArtwork(rows);
             setCount(count)
         })
     };
@@ -78,116 +78,147 @@ const Admin = () => {
     }
 
     return (
-        <Container className="d-flex flex-column">
-            {showSuccessMsg && <p>{successMsg}</p>}
+        <Container className="d-flex">
+            <Row >
+                <Col md={3} className="d-flex flex-column">
+                    {showSuccessMsg && <p>{successMsg}</p>}
+                    <Button
+                        onClick={() => setTypeVisible(true)}
+                        variant="primary"
+                        className="mt-4 p-2"
+                    >
+                        Добавить тип
+                    </Button>
+                    <Button
+                        onClick={() => setAuthorVisible(true)}
+                        variant="primary"
+                        className="mt-4 p-2"
+                    >
+                        Добавить автора
+                    </Button>
+                    <Button
+                        onClick={() => setArtworkVisible(true)}
+                        variant="primary"
+                        className="mt-4 p-2 align-self-stretch"
+                    >
+                        Добавить произведение искусства
+                    </Button>
+                    <Button
+                        onClick={() => setDeleteAuthorOrType(true)}
+                        variant="primary"
+                        className="mt-4 p-2"
+                    >
+                        Удалить тип или автора
+                    </Button>
+                    <CreateArtwork show={artworkVisible} onHide={() => setArtworkVisible(false)} />
+                    <CreateAuthor show={authorVisible} onHide={() => setAuthorVisible(false)} />
+                    <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
+                    <DeleteAuthorOrType show={deleteAuthorOrType} onHide={() => setDeleteAuthorOrType(false)} showSuccessMsgFunc={showSuccessMsgFunc} />
+
+                </Col>
+                <Col md={8}>
+                    <InputGroup className="mb-3 mt-5" >
+                        <Form.Control
+                            aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default"
+                            value={searchArtwork}
+                            onChange={e => setSearchArtwork(e.target.value)}
+                            placeholder="Введите название произведения искусства"
+                        />
+                        <Button
+                            onClick={fetchArtwork}
+                            variant="primary"
+                            className="ml-2"
+                        >
+                            Найти
+                        </Button>
+                    </InputGroup >
+
+                    <ListGroup>
+                        {searchedArtwork && searchedArtwork.map(({ id, img, author, type, price, name }) => {
+                            return (
+                                <ListGroup.Item className="mt-3" key={id}>
+                                    <Row>
+                                        <Col xs={3}>
+                                            <Image width={"100%"} src={"http://localhost:5000/" + img} />
+                                        </Col>
+                                        <Col xs={8}>
+                                            <Row>
+                                                <Col xs={12}>
+                                                    <NavLink to={ARTWORK_EDIT_ROUTE + `/${id}`}>id: {id}</NavLink>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={12}>
+                                                    Название: {name}
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={12}>
+                                                    Цена: {price}
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={12}>
+                                                    Автор: {author.name}
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={12}>
+                                                    Тип: {type.name}
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col xs={2}>
+                                            <NavLink to={ARTWORK_EDIT_ROUTE + `/${id}`}>Редактировать</NavLink>
+                                        </Col>
+                                    </Row>
+                                </ListGroup.Item>
+                            )
+                        })}
+                    </ListGroup>
+
+                    <Pagination activeLabel={""} size="sm" className="mt-4 mb-4 justify-content-center" style={{ margin: "0 auto" }}>
+                        {searchedArtwork && searchedArtwork.length > 0 ? pages : false}
+                    </Pagination>
+                </Col>
+            </Row>
+            {/* {showSuccessMsg && <p>{successMsg}</p>}
             <Button
                 onClick={() => setTypeVisible(true)}
-                variant="outline-dark"
-                className="mt-4 p-2"
+                variant="outline-primary"
+                style={{ color: 'white' }}
+                className="mt-4 p-2 align-self-center"
             >
                 Добавить тип
             </Button>
             <Button
-                onClick={() => setBrandVisible(true)}
+                onClick={() => setAuthorVisible(true)}
                 variant="outline-dark"
-                className="mt-4 p-2"
+                className="mt-4 p-2 align-self-center"
             >
-                Добавить бренд
+                Добавить автора
             </Button>
             <Button
-                onClick={() => setDeviceVisible(true)}
+                onClick={() => setArtworkVisible(true)}
                 variant="outline-dark"
-                className="mt-4 p-2"
+                className="mt-4 p-2 align-self-center"
             >
-                Добавить устройство
+                Добавить произведение искусства
             </Button>
             <Button
-                onClick={() => setDeleteBrandOrType(true)}
+                onClick={() => setDeleteAuthorOrType(true)}
                 variant="outline-dark"
-                className="mt-4 p-2"
+                className="mt-4 p-2 align-self-center"
             >
-                Удалить тип или бренд
+                Удалить тип или автора
             </Button>
-            <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)} />
-            <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
+            <CreateArtwork show={artworkVisible} onHide={() => setArtworkVisible(false)} />
+            <CreateAuthor show={authorVisible} onHide={() => setAuthorVisible(false)} />
             <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
-            <DeleteBrandOrType show={deleteBrandOrType} onHide={() => setDeleteBrandOrType(false)} showSuccessMsgFunc={showSuccessMsgFunc} />
+            <DeleteAuthorOrType show={deleteAuthorOrType} onHide={() => setDeleteAuthorOrType(false)} showSuccessMsgFunc={showSuccessMsgFunc} />
+ */}
 
-            <Dropdown className="mt-5 mb-3" style={{ margin: "0 auto" }}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    {filter}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    {filter === "All" ? <Dropdown.Item disabled>Весь товар</Dropdown.Item> : <Dropdown.Item onClick={() => setFilter("All")}>Весь товар</Dropdown.Item>}
-                    {/* {filter === "Without Brand or Type" ? <Dropdown.Item disabled>Without Brand or Type</Dropdown.Item> : <Dropdown.Item onClick={() => setFilter("Without Brand or Type")}>Without Brand or Type</Dropdown.Item>} */}
-                </Dropdown.Menu>
-            </Dropdown>
-
-            <InputGroup className="mb-3" >
-                <Form.Control
-                    aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default"
-                    value={searchDevice}
-                    onChange={e => setSearchDevice(e.target.value)}
-                    placeholder="Введите название устройства..."
-                />
-                <Button
-                    onClick={fetchDevice}
-                    variant="outline-dark"
-                    className="ml-2"
-                >
-                    Поиск
-                </Button>
-            </InputGroup >
-
-            <ListGroup>
-                {searchedDevice && searchedDevice.map(({ id, img, brand, type, price, name }) => {
-                    return (
-                        <ListGroup.Item className="mt-3" key={id}>
-                            <Row>
-                                <Col xs={3}>
-                                    <Image width={"100%"} src={"http://localhost:5000/" + img} />
-                                </Col>
-                                <Col xs={8}>
-                                    <Row>
-                                        <Col xs={12}>
-                                            <NavLink to={DEVICE_EDIT_ROUTE + `/${id}`}>id: {id}</NavLink>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs={12}>
-                                            Название: {name}
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs={12}>
-                                            Цена: {price}
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs={12}>
-                                            Бренд: {brand.name}
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs={12}>
-                                            Тип: {type.name}
-                                        </Col>
-                                    </Row>
-                                </Col>
-                                <Col xs={2}>
-                                    <NavLink to={DEVICE_EDIT_ROUTE + `/${id}`}>Редактировать</NavLink>
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
-                    )
-                })}
-            </ListGroup>
-
-            <Pagination size="sm" className="mt-4 mb-4" style={{ margin: "0 auto" }}>
-                {searchedDevice && searchedDevice.length > 0 ? pages : false}
-            </Pagination>
         </Container >
     );
 };

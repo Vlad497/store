@@ -7,7 +7,7 @@ import NavBar from "./components/NavBar/NavBar";
 import { Container, Spinner } from "react-bootstrap";
 import { Context } from "./index";
 import { check } from "./http/userApi";
-import { getDeviceFromBasket } from "./http/deviceAPI";
+import { getArtworkFromBasket } from "./http/artworkAPI";
 
 const App = observer(() => {
     const { user, basket } = useContext(Context);
@@ -30,14 +30,14 @@ const App = observer(() => {
 
     useEffect(() => {
         if (user.isAuth === false) {
-            basket.setDeleteAllDeviceFromBasket();
+            basket.setDeleteAllArtworkFromBasket();
             const savedBasket = JSON.parse(localStorage.getItem("basket"));
             for (let key in savedBasket) {
                 basket.setBasket(savedBasket[key]);
             }
         } else if (user.isAuth === true) {
-            basket.setDeleteAllDeviceFromBasket();
-            getDeviceFromBasket().then(data => {
+            basket.setDeleteAllArtworkFromBasket();
+            getArtworkFromBasket().then(data => {
                 for (let key in data) {
                     basket.setBasket(data[key], true);
                 }
@@ -50,9 +50,9 @@ const App = observer(() => {
     }
 
     return (
-        <BrowserRouter>
+        <BrowserRouter >
             <NavBar />
-            <Container>
+            <Container >
                 <AppRouter />
             </Container>
         </BrowserRouter>

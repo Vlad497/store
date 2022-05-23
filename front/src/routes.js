@@ -1,7 +1,7 @@
 import {
     ADMIN_ROUTE,
-    BASKET_ROUTE, DEVICE_EDIT_ROUTE,
-    DEVICE_ROUTE,
+    BASKET_ROUTE, ARTWORK_EDIT_ROUTE,
+    ARTWORK_ROUTE,
     LOGIN_ROUTE, ORDERING_ROUTE,
     ORDERS_ROUTE,
     REGISTRATION_ROUTE,
@@ -12,10 +12,10 @@ import Admin from "./pages/Admin";
 import Orders from "./pages/Orders";
 import Shop from "./pages/Shop";
 import Auth from "./pages/Auth";
-import DevicePage from "./pages/DevicePage";
+import ArtworkPage from "./pages/ArtworkPage";
 import BasketCard from "./pages/BasketCard";
 import OneOrder from "./pages/OneOrder";
-import DevicePageEdit from "./pages/DevicePageEdit";
+import ArtworkPageEdit from "./pages/ArtworkPageEdit";
 import Ordering from "./pages/Ordering";
 
 
@@ -33,8 +33,8 @@ export const authRouters = [
         Component: OneOrder
     },
     {
-        path: DEVICE_EDIT_ROUTE + '/:id',
-        Component: DevicePageEdit
+        path: ARTWORK_EDIT_ROUTE + '/:id',
+        Component: ArtworkPageEdit
     },
 
 ];
@@ -57,8 +57,8 @@ export const publicRouters = [
         Component: Auth
     },
     {
-        path: DEVICE_ROUTE + '/:id',
-        Component: DevicePage
+        path: ARTWORK_ROUTE + '/:id',
+        Component: ArtworkPage
     },
     {
         path: BASKET_ROUTE,

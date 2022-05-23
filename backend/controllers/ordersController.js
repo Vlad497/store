@@ -1,25 +1,25 @@
-const { Orders, OrderDevice, Device, Brand, Type } = require('./../models/models');
+const { Orders, OrderArtwork, Artwork, Author, Type } = require('./../models/models');
 const ApiError = require('../error/apiError');
 const jwt = require('jsonwebtoken');
 
 class OrdersController {
     async create(req, res) {
         const auth = req.headers.authorization || "";
-        const { mobile, basket } = req.body;
+        const { mobile, name, address, basket } = req.body;
 
         try {
-            let parseDevices = [];
+            let parseArtworks = [];
             for (let key of basket) {
-                parseDevices.push(key.id)
+                parseArtworks.push(key.id)
             }
 
-            const isDeviceInDB = await Device.findAndCountAll({
-                where: { id: parseDevices },
+            const isArtworkInDB = await Artwork.findAndCountAll({
+                where: { id: parseArtworks },
                 attributes: ["id"]
             });
 
-            if (isDeviceInDB.count === parseDevices.length) {
-                const row = { mobile };
+            if (isArtworkInDB.count === parseArtworks.length) {
+                const row = { mobile, name, address };
                 if (auth) {
                     const token = auth.split(' ')[1];
                     const { id } = jwt.verify(token, "sdsgdsgdsfgdf");
@@ -28,25 +28,25 @@ class OrdersController {
 
                 await Orders.create(row).then(order => {
                     const { id } = order.get();
-                    parseDevices.forEach(async (deviceId, i) => {
+                    parseArtworks.forEach(async (artworkId, i) => {
 
-                        await OrderDevice.create({
+                        await OrderArtwork.create({
                             orderId: id,
-                            deviceId,
+                            artworkId,
                             count: basket[i].count
                         });
                     });
                 });
             } else {
-                const notFoundIdDevices = [];
-                const arrDevices = [];
-                isDeviceInDB.rows.forEach(item => arrDevices.push(item.id));
-                parseDevices.forEach(deviceId => {
-                    if (!arrDevices.includes(deviceId)) {
-                        notFoundIdDevices.push(deviceId);
+                const notFoundIdArtworks = [];
+                const arrArtworks = [];
+                isArtworkInDB.rows.forEach(item => arrArtworks.push(item.id));
+                parseArtworks.forEach(artworkId => {
+                    if (!arrArtworks.includes(artworkId)) {
+                        notFoundIdArtworks.push(artworkId);
                     }
                 });
-                return ApiError.badRequest(res.json(`Устройства с id(${notFoundIdDevices.join(', ')}) не существует в базе данных`));
+                return ApiError.badRequest(res.json(`Произведение искусства с id(${notFoundIdArtworks.join(', ')}) не существует в базе данных`));
             }
 
             return res.json("Спасибо вам за ваш заказ! Мы свяжемся с вами в ближайшее время");
@@ -99,35 +99,35 @@ class OrdersController {
         page = page || 1;
         limit = limit || 7;
         let offset = page * limit - limit;
-        let devices;
+        let artworks;
         if (complete === "not-completed") {
-            devices = await Orders.findAndCountAll({ where: { complete: false }, limit, offset });
+            artworks = await Orders.findAndCountAll({ where: { complete: false }, limit, offset });
         } else if (complete === "completed") {
-            devices = await Orders.findAndCountAll({ where: { complete: true }, limit, offset });
+            artworks = await Orders.findAndCountAll({ where: { complete: true }, limit, offset });
         } else {
-            devices = await Orders.findAndCountAll({ limit, offset });
+            artworks = await Orders.findAndCountAll({ limit, offset });
         }
 
-        return res.json(devices);
+        return res.json(artworks);
     }
 
     async getOne(req, res) {
         const { id } = req.params;
         const order = {};
         try {
-            let devices;
-            let infoDevices = [];
+            let artworks;
+            let infoArtworks = [];
             await Orders.findOne({ where: { id } }).then(async data => {
                 order.descr = data;
-                devices = await OrderDevice.findAll({
-                    attributes: ["deviceId", "count"],
+                artworks = await OrderArtwork.findAll({
+                    attributes: ["artworkId", "count"],
                     where: { orderId: data.id },
                 });
 
-                for (let device of devices) {
-                    await Device.findOne({
+                for (let artwork of artworks) {
+                    await Artwork.findOne({
                         attributes: ["name", "img", "price"],
-                        where: { id: device.deviceId },
+                        where: { id: artwork.artworkId },
                         include: [
                             {
                                 attributes: ["name"],
@@ -135,18 +135,18 @@ class OrdersController {
                             },
                             {
                                 attributes: ["name"],
-                                model: Brand
+                                model: Author
                             },
                         ]
                     }).then(async item => {
                         let newObj = {
                             descr: item,
-                            count: device.count
+                            count: artwork.count
                         }
-                        infoDevices.push(newObj);
+                        infoArtworks.push(newObj);
                     });
                 }
-                order.devices = infoDevices;
+                order.artworks = infoArtworks;
 
                 return res.json(order);
             }).catch(() => {
