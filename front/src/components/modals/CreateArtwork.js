@@ -58,7 +58,7 @@ const CreateArtwork = observer(({ show, onHide }) => {
             <Modal.Body>
                 <Form>
                     <Dropdown className="mt-2 mb-2">
-                        <Dropdown.Toggle>{artwork.selectedType.name || "Выбрать тип"}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{artwork.selectedType.name || "Выбрать вид"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {artwork.types.map(type =>
                                 <Dropdown.Item

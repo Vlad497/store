@@ -87,7 +87,7 @@ const Admin = () => {
                         variant="primary"
                         className="mt-4 p-2"
                     >
-                        Добавить тип
+                        Добавить вид искусства
                     </Button>
                     <Button
                         onClick={() => setAuthorVisible(true)}
@@ -108,7 +108,7 @@ const Admin = () => {
                         variant="primary"
                         className="mt-4 p-2"
                     >
-                        Удалить тип или автора
+                        Удалить вид или автора
                     </Button>
                     <CreateArtwork show={artworkVisible} onHide={() => setArtworkVisible(false)} />
                     <CreateAuthor show={authorVisible} onHide={() => setAuthorVisible(false)} />
@@ -165,7 +165,7 @@ const Admin = () => {
                                             </Row>
                                             <Row>
                                                 <Col xs={12}>
-                                                    Тип: {type.name}
+                                                    Вид: {type.name}
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -183,41 +183,6 @@ const Admin = () => {
                     </Pagination>
                 </Col>
             </Row>
-            {/* {showSuccessMsg && <p>{successMsg}</p>}
-            <Button
-                onClick={() => setTypeVisible(true)}
-                variant="outline-primary"
-                style={{ color: 'white' }}
-                className="mt-4 p-2 align-self-center"
-            >
-                Добавить тип
-            </Button>
-            <Button
-                onClick={() => setAuthorVisible(true)}
-                variant="outline-dark"
-                className="mt-4 p-2 align-self-center"
-            >
-                Добавить автора
-            </Button>
-            <Button
-                onClick={() => setArtworkVisible(true)}
-                variant="outline-dark"
-                className="mt-4 p-2 align-self-center"
-            >
-                Добавить произведение искусства
-            </Button>
-            <Button
-                onClick={() => setDeleteAuthorOrType(true)}
-                variant="outline-dark"
-                className="mt-4 p-2 align-self-center"
-            >
-                Удалить тип или автора
-            </Button>
-            <CreateArtwork show={artworkVisible} onHide={() => setArtworkVisible(false)} />
-            <CreateAuthor show={authorVisible} onHide={() => setAuthorVisible(false)} />
-            <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
-            <DeleteAuthorOrType show={deleteAuthorOrType} onHide={() => setDeleteAuthorOrType(false)} showSuccessMsgFunc={showSuccessMsgFunc} />
- */}
 
         </Container >
     );

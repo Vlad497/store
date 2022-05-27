@@ -39,7 +39,7 @@ const OneOrder = () => {
                 <Col xs={5} className="mr-5">
                     Номер заказа: {id} <br />
                     Статус: {order?.descr.complete ? "Выполнен" : "Не выполнен"} <br />
-                    Покупатель: {order?.descr.userId ? order.descr.userId : "Зарегистрирован"} <br />
+                    Зарегистрирован: {order?.descr.userId ? "Да" : "Нет"} <br />
                     Создан: {formatDate(order?.descr.createdAt)} <br />
                     Номер телефона: <a href={`tel:${order?.descr.mobile}`}> {order?.descr.mobile}</a>
                     <br />
@@ -57,7 +57,7 @@ const OneOrder = () => {
                                 </Col>
                                 <Col xs={8} style={{ color: "white", fontSize: '1.5vw' }}>
                                     Автор: {descr.author.name}<br />
-                                    Тип: {descr.type.name}<br />
+                                    Вид искусства: {descr.type.name}<br />
                                     Название: {descr.name}<br />
                                     Цена: {descr.price} BYN<br />
                                     Количество: {count}<br />

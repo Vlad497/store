@@ -225,9 +225,6 @@ class ArtworkController {
 
                         if (info) {
                             const parseInfo = JSON.parse(info);
-                            await ArtworkInfo.destroy({
-                                where: {}
-                            })
                             for (const item of parseInfo) {
                                 await ArtworkInfo.findOne({ where: { id: item.id } }).then(async data => {
                                     if (data) {

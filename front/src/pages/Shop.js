@@ -43,14 +43,13 @@ const Shop = observer(() => {
             </Row>
             <Row >
                 <Col md={3}>
+                    <AuthorBar />
                     <TypeBar />
                 </Col>
                 <Col md={6}>
                     <ArtworkList />
                 </Col>
-                <Col md={3}>
-                    <AuthorBar />
-                </Col>
+
             </Row>
 
         </Container >

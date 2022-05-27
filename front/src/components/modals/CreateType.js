@@ -20,13 +20,13 @@ const CreateType = ({ show, onHide }) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Добавление типа
+                    Добавление вида искусства
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Control
-                        placeholder="Введите название типа"
+                        placeholder="Введите название вида"
                         onChange={e => setValue(e.target.value)}
                         value={value}
                     />

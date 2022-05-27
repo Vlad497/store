@@ -35,12 +35,12 @@ const ArtworkPage = observer(() => {
                 <Col md={6}>
                     <Image height={400} width={"100%"} src={'http://localhost:5000/' + artwork.img} />
                 </Col>
-                <Col md={3}>
+                <Col md={4}>
                     <Row className="d-flex flex-column align-items-start ml-2" style={{ fontWeight: "bolder", color: 'white' }}>
                         <h2>{artwork.name}</h2>
                     </Row>
                 </Col>
-                <Col md={2}>
+                <Col md={1}>
                     <Row
                         className="d-flex flex-column align-items-center justify-content-around"
                         style={{ width: 300, height: 100, fontSize: 32, background: "transparent", color: "white" }}

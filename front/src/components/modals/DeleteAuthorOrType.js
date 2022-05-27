@@ -7,7 +7,7 @@ const DeleteAuthorOrType = ({ show, onHide, showSuccessMsgFunc }) => {
     const [authors, setAuthors] = useState([]);
     const [types, setTypes] = useState([]);
     const [selectAuthor, setSelectAuthor] = useState({ name: "Автор не выбран" });
-    const [selectType, setSelectType] = useState({ name: "Тип не выбран" });
+    const [selectType, setSelectType] = useState({ name: "Вид не выбран" });
     const [showMsgErr, setShowMsgErr] = useState(false);
     const [msgErr, setMsgErr] = useState('');
 
@@ -29,14 +29,14 @@ const DeleteAuthorOrType = ({ show, onHide, showSuccessMsgFunc }) => {
                 setShowMsgErr(true);
             }
         } else {
-            if (selectType.name !== "Тип не выбран") {
+            if (selectType.name !== "Вид не выбран") {
                 await deleteType(selectType.id).then(data => {
                     showSuccessMsgFunc(data);
                     onHide();
-                    setSelectType({ name: "Тип не выбран" });
+                    setSelectType({ name: "Вид не выбран" });
                 });
             } else {
-                setMsgErr("Выберите тип");
+                setMsgErr("Выберите вид");
                 setShowMsgErr(true);
             }
         }
@@ -53,7 +53,7 @@ const DeleteAuthorOrType = ({ show, onHide, showSuccessMsgFunc }) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Удаление типа или автора из списков
+                    Удаление вида или автора из списков
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -71,11 +71,11 @@ const DeleteAuthorOrType = ({ show, onHide, showSuccessMsgFunc }) => {
 
                     <Dropdown.Menu>
                         {authorOrType === "Автор" ? <Dropdown.Item disabled>Автор</Dropdown.Item> : <Dropdown.Item onClick={() => setAuthorOrType("Автор")}>Автор</Dropdown.Item>}
-                        {authorOrType === "Тип" ? <Dropdown.Item disabled>Тип</Dropdown.Item> : <Dropdown.Item onClick={() => setAuthorOrType("Тип")}>Тип</Dropdown.Item>}
+                        {authorOrType === "Вид" ? <Dropdown.Item disabled>Вид</Dropdown.Item> : <Dropdown.Item onClick={() => setAuthorOrType("Вид")}>Вид</Dropdown.Item>}
                     </Dropdown.Menu>
                 </Dropdown>
 
-                Выбрать {authorOrType === "Автор" ? "автор" : "тип"}
+                Выбрать {authorOrType === "Автор" ? "автор" : "вид"}
                 <Dropdown className="mb-3" style={{ margin: "0 auto" }}>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         {authorOrType === "Автор" ? selectAuthor.name : selectType.name}

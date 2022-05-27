@@ -100,9 +100,9 @@ class OrdersController {
         limit = limit || 7;
         let offset = page * limit - limit;
         let artworks;
-        if (complete === "not-completed") {
+        if (complete === "Не выполненные") {
             artworks = await Orders.findAndCountAll({ where: { complete: false }, limit, offset });
-        } else if (complete === "completed") {
+        } else if (complete === "Выполненные") {
             artworks = await Orders.findAndCountAll({ where: { complete: true }, limit, offset });
         } else {
             artworks = await Orders.findAndCountAll({ limit, offset });

@@ -143,7 +143,7 @@ const ArtworkPageEdit = observer(() => {
                         </Col>
                         <Col xs={11}>
                             <Dropdown className="mt-2 mb-2">
-                                <Dropdown.Toggle>{selectAuthor.name || "Choose Author"}</Dropdown.Toggle>
+                                <Dropdown.Toggle>{selectAuthor.name || "Выбрать автора"}</Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     {artwork.authors.map(author => {
                                         return author.name === selectAuthor.name ?
@@ -168,11 +168,11 @@ const ArtworkPageEdit = observer(() => {
                     </Row>
                     <Row>
                         <Col xs={1} className="d-flex align-items-center" style={{ color: "white" }}>
-                            Типы:
+                            Виды искусства:
                         </Col>
                         <Col xs={11}>
                             <Dropdown className="mt-2 mb-2">
-                                <Dropdown.Toggle>{selectType.name || "Choose Type"}</Dropdown.Toggle>
+                                <Dropdown.Toggle>{selectType.name || "Выбрать вид"}</Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     {artwork.types.map(type => {
                                         return type.name === selectType.name ?

@@ -11,7 +11,7 @@ module.exports = async function (req, res, next) {
         if (artworkItem) {
             return next();
         }
-        return res.json("Устройство не найдено в корзине пользователя");
+        return res.json("Произведение искусства не найдено в корзине пользователя");
     } catch (e) {
         res.json(e);
     }

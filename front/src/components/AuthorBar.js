@@ -1,24 +1,54 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
-import { Card, Row, ListGroup } from "react-bootstrap";
+import { ListGroup, Dropdown } from "react-bootstrap";
 
 const AuthorBar = observer(() => {
+    const [selectAuthor, setSelectAuthor] = useState({});
     const { artwork } = useContext(Context);
     return (
-        <ListGroup>
-            {artwork.authors.map(author =>
-                <ListGroup.Item
-                    style={{ cursor: "pointer", background: "transparent", color: "white" }}
-                    active={author.id === artwork.selectedAuthor.id}
-                    key={author.id}
-                    onClick={() => artwork.setSelectedAuthor(author)}
-                    className="p-1"
-                >
-                    {author.name}
-                </ListGroup.Item>
-            )}
-        </ListGroup>
+        <div>
+            {/* <ListGroup>
+                {artwork.authors.map(author =>
+                    <ListGroup.Item
+                        style={{ cursor: "pointer", background: "transparent", color: "white" }}
+                        active={author.id === artwork.selectedAuthor.id}
+                        key={author.id}
+                        onClick={() => artwork.setSelectedAuthor(author)}
+                        className="p-1"
+                    >
+                        {author.name}
+                    </ListGroup.Item>
+                )}
+            </ListGroup> */}
+            <Dropdown className="mt-2 mb-2">
+                <Dropdown.Toggle style={{ background: "transparent", color: "white" }}>{selectAuthor.name || "Выбрать автора"}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {artwork.authors.map(author => {
+                        return author.name === selectAuthor.name ?
+                            <Dropdown.Item
+                                key={author.id}
+                                disabled
+                            >
+                                {author.name}
+                            </Dropdown.Item>
+                            :
+                            <Dropdown.Item
+                                key={author.id}
+                                onClick={() => {
+                                    artwork.setSelectedAuthor(author)
+                                    setSelectAuthor(author)
+                                }}
+                            >
+                                {author.name}
+                            </Dropdown.Item>
+
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+
+
     );
 });
 

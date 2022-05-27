@@ -5,7 +5,8 @@ import {
     LOGIN_ROUTE, ORDERING_ROUTE,
     ORDERS_ROUTE,
     REGISTRATION_ROUTE,
-    SHOP_ROUTE
+    SHOP_ROUTE,
+    NEWS_ROUTE
 } from './utils/consts';
 
 import Admin from "./pages/Admin";
@@ -14,6 +15,7 @@ import Shop from "./pages/Shop";
 import Auth from "./pages/Auth";
 import ArtworkPage from "./pages/ArtworkPage";
 import BasketCard from "./pages/BasketCard";
+import NewsPage from "./pages/NewsPage";
 import OneOrder from "./pages/OneOrder";
 import ArtworkPageEdit from "./pages/ArtworkPageEdit";
 import Ordering from "./pages/Ordering";
@@ -64,4 +66,8 @@ export const publicRouters = [
         path: BASKET_ROUTE,
         Component: BasketCard
     },
+    {
+        parh: NEWS_ROUTE,
+        Component: NewsPage
+    }
 ];
