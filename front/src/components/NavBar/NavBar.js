@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
+import { Image } from "react-bootstrap";
 
 import { Context } from "../../index";
 
@@ -15,7 +16,7 @@ const NavBar = observer(() => {
     return (
         <Navbar bg="dark" variant="dark" style={{ opacity: "0.7" }}>
             <Container>
-                <NavLink style={{ color: "white", fontSize: "2vw" }} to={SHOP_ROUTE}>Gallero</NavLink>
+                <NavLink className="mr-5" style={{ color: "white", fontSize: "1.75rem" }} to={SHOP_ROUTE}>GALLERO</NavLink>
                 {user.isAuth ? <TrueAuth /> : <FalseAuth />}
             </Container>
         </Navbar>

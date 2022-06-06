@@ -7,6 +7,7 @@ const userRouter = require('./userRouter');
 const basketRouter = require('./basketRouter');
 const ordersRouter = require('./ordersRouter');
 const newsRouter = require('./newsRouter');
+const galleryRouter = require('./galleryRouter');
 
 router.use('/user', userRouter)
 router.use('/type', typeRouter)
@@ -15,6 +16,7 @@ router.use('/artwork', artworkRouter)
 router.use('/basket', basketRouter)
 router.use('/orders', ordersRouter)
 router.use('/news', newsRouter)
+router.use('/gallery', galleryRouter)
 
 
 module.exports = router;

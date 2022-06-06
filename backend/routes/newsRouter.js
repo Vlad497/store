@@ -1,12 +1,14 @@
 const Router = require('express');
 const router = new Router();
-const BasketController = require('./../controllers/basketController');
-const authMiddleware = require('./../middleware/authMiddleware');
-const checkDeleteArtworkFromBasket = require('./../middleware/checkDeleteArtworkFromBasket');
+const newsController = require('../controllers/newsController');
+const checkRole = require('../middleware/checkRoleMiddleware');
 
 router
-    /* .post('/', authMiddleware, BasketController.addArtwork) */
-    .get('/', BasketController.getArtworks)
-/* .delete('/:id', authMiddleware, checkDeleteArtworkFromBasket, BasketController.deleteArtwork); */
+    .post('/newsOne', newsController.create)
+    .get('/newsOne', newsController.getAll)
+    .get('/newsOne/search', newsController.getSearchAllNewsByName)
+    .get('/newsOne/:id', newsController.getOne)
+    .delete('/newsOne/:id', checkRole("ADMIN"), newsController.delete)
+    .put('/newsOne/:id', checkRole("ADMIN"), newsController.update)
 
 module.exports = router;

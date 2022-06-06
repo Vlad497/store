@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { getOneOrderArtworks } from "../http/ordersAPI";
 
 const ReportRow = ({ id, createdAt, customerName }) => {
@@ -22,8 +22,6 @@ const ReportRow = ({ id, createdAt, customerName }) => {
 
     return (
         <tbody>
-
-
             {order?.artworks.map(({ count, descr }, i) => {
                 return (
                     <tr key={i}>
@@ -39,66 +37,6 @@ const ReportRow = ({ id, createdAt, customerName }) => {
                 )
             })}
         </tbody>
-        /*  <tr>
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {id}</td >
-                     )
-                 })
- 
-             }
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {createdAt}</td >
-                     )
-                 })
- 
-             }
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {customerName}</td >
-                     )
-                 })
- 
-             }
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {descr.name}</td >
-                     )
-                 })
- 
-             }
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {descr.price}</td >
-                     )
-                 })
- 
-             }
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {count}</td >
-                     )
-                 })
- 
-             }
-             {
-                 order?.artworks.map(({ count, descr }, i) => {
-                     return (
-                         <td key={i}> {count * descr.price}</td >
-                     )
-                 })
- 
-             }
- 
-         </tr> */
-
     )
 };
 

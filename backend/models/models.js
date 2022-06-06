@@ -24,6 +24,13 @@ const Artwork = sequelize.define('artwork', {
     img: { type: DataTypes.STRING, allowNull: false },
 });
 
+const News = sequelize.define('news', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, unique: true, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: false },
+    img: { type: DataTypes.STRING, allowNull: false },
+});
+
 const Type = sequelize.define('type', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
@@ -61,6 +68,21 @@ const OrderArtwork = sequelize.define('order_artwork', {
     count: { type: DataTypes.INTEGER, allowNull: false },
 })
 
+const Gallery = sequelize.define('gallery', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, unique: true, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: false },
+    address: { type: DataTypes.STRING(50), allowNull: false },
+    img: { type: DataTypes.STRING, allowNull: false },
+})
+
+const GalleryArtwork = sequelize.define('gallery_artwork', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    artworkId: { type: DataTypes.INTEGER, allowNull: false },
+    galleryId: { type: DataTypes.INTEGER, allowNull: false },
+    count: { type: DataTypes.INTEGER, allowNull: false },
+})
+
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
@@ -78,6 +100,15 @@ Orders.hasMany(OrderArtwork);
 OrderArtwork.belongsTo(Orders,
     {
         foreignKey: { name: 'orderId' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    }
+);
+
+Gallery.hasMany(GalleryArtwork);
+GalleryArtwork.belongsTo(Gallery,
+    {
+        foreignKey: { name: 'galleryId' },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     }
@@ -114,6 +145,9 @@ module.exports = {
     TypeAuthor,
     ArtworkInfo,
     Orders,
-    OrderArtwork
+    OrderArtwork,
+    News,
+    Gallery,
+    GalleryArtwork
 }
 

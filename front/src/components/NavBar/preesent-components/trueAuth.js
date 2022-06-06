@@ -4,6 +4,7 @@ import { Context } from "../../../index";
 import { useNavigate } from "react-router-dom";
 import { ADMIN_ROUTE, ORDERS_ROUTE } from "../../../utils/consts";
 import BasketNavBar from "../BasketNavBar";
+import CenterNavBar from "../CenterNavBar";
 
 const TrueAuth = () => {
     const { user, basket } = useContext(Context);
@@ -18,6 +19,7 @@ const TrueAuth = () => {
 
     return (
         <Nav className="ml-auto" style={{ color: "white" }}>
+            <CenterNavBar />
             <BasketNavBar />
             {user.isAuth && (user.User.role === "ADMIN" || user.User.role === "MANAGER") && <Button
                 className={"mr-3"}

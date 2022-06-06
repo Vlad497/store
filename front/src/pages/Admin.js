@@ -3,7 +3,6 @@ import {
     Button,
     Col,
     Container,
-    Dropdown,
     Form,
     Image,
     InputGroup,
@@ -17,10 +16,12 @@ import CreateAuthor from "../components/modals/CreateAuthor";
 import CreateType from "../components/modals/CreateType";
 import { getAllArtworksInAdminPage } from "../http/artworkAPI";
 import { NavLink } from "react-router-dom";
-import { ARTWORK_EDIT_ROUTE } from "../utils/consts";
+import { ARTWORK_EDIT_ROUTE, NEWS_ADMIN_ROUTE, GALLERY_ADMIN_ROUTE } from "../utils/consts";
 import DeleteAuthorOrType from "../components/modals/DeleteAuthorOrType";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
+    const navigate = useNavigate();
     const [authorVisible, setAuthorVisible] = useState(false);
     const [typeVisible, setTypeVisible] = useState(false);
     const [artworkVisible, setArtworkVisible] = useState(false);
@@ -36,12 +37,12 @@ const Admin = () => {
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
 
     //pagination
-    const limit = 5;
+    const limit = 3;
     const pageCount = Math.ceil(Number(count) / limit);
     const pages = [];
     for (let number = 1; number < pageCount + 1; number++) {
         pages.push(
-            <Pagination.Item key={number} active={number === currentPage} onClick={() => setCurrentPage(number)}>
+            <Pagination.Item key={number} activeLabel={""} active={number === currentPage} onClick={() => setCurrentPage(number)}>
                 {number}
             </Pagination.Item>
         );
@@ -82,6 +83,20 @@ const Admin = () => {
             <Row >
                 <Col md={3} className="d-flex flex-column">
                     {showSuccessMsg && <p>{successMsg}</p>}
+                    <Button
+                        className="mt-4 p-2"
+                        variant={"primary"}
+                        onClick={() => { navigate(NEWS_ADMIN_ROUTE) }}
+                    >
+                        Изменение новостей
+                    </Button>
+                    <Button
+                        className="mt-4 p-2"
+                        variant={"primary"}
+                        onClick={() => { navigate(GALLERY_ADMIN_ROUTE) }}
+                    >
+                        Изменение галерей
+                    </Button>
                     <Button
                         onClick={() => setTypeVisible(true)}
                         variant="primary"

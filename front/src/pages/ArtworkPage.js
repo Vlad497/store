@@ -33,11 +33,18 @@ const ArtworkPage = observer(() => {
         <Container className="mt-3">
             <Row>
                 <Col md={6}>
-                    <Image height={400} width={"100%"} src={'http://localhost:5000/' + artwork.img} />
+                    <Image height={500} width={"100%"} src={'http://localhost:5000/' + artwork.img} />
                 </Col>
                 <Col md={4}>
-                    <Row className="d-flex flex-column align-items-start ml-2" style={{ fontWeight: "bolder", color: 'white' }}>
+                    <Row className="d-flex flex-column align-items-start m-2 mb-5 mt-3" style={{ fontWeight: "bolder", color: 'white' }}>
                         <h2>{artwork.name}</h2>
+                    </Row>
+                    <Row className="d-flex flex-column m-2" style={{ borderTop: "3px solid black" }}>
+                        {artwork.info.map((info, index) =>
+                            <Row key={info.id} style={{ padding: 10, color: "white", fontSize: "2vw" }}>
+                                {info.title}: {info.description}
+                            </Row>
+                        )}
                     </Row>
                 </Col>
                 <Col md={1}>
@@ -51,17 +58,10 @@ const ArtworkPage = observer(() => {
                             :
                             <Button variant="outline-light" disabled>Добавлено в корзину</Button>
                         }
-
                     </Row>
                 </Col>
             </Row>
-            <Row className="d-flex flex-column m-3" style={{ borderTop: "3px solid black" }}>
-                {artwork.info.map((info, index) =>
-                    <Row key={info.id} style={{ padding: 10, color: "white", fontSize: "2vw" }}>
-                        {info.title}: {info.description}
-                    </Row>
-                )}
-            </Row>
+
         </Container>
     );
 });
